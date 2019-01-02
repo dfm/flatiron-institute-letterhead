@@ -1,0 +1,149 @@
+% Style by Dan Foreman-Mackey (Flatiron)
+% Based on the `hogg_nasa` stylesheet by David W. Hogg (NYU)
+
+% Colors.
+\usepackage{amsmath}
+\usepackage{color}
+
+\usepackage[para]{footmisc}
+
+\usepackage{epsfig}
+\usepackage{graphicx}
+
+% Single-spacing.
+\def\baselinestretch{1.1}
+\setlength{\parindent}{\baselineskip}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{2\baselineskip}
+
+\usepackage{multicol}
+
+\usepackage[pagebackref=false]{hyperref}
+\definecolor{linkcolor}{RGB}{62, 101, 158}
+\hypersetup{colorlinks=true,linkcolor=linkcolor,citecolor=linkcolor,
+            filecolor=linkcolor,urlcolor=linkcolor}
+\urlstyle{sm}
+
+%----- exact 1-in margins
+% NB: headheight and headsep MUST exist and be set
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\addtolength{\textheight}{-1.0\headheight}
+\addtolength{\textheight}{-1.0\headsep}
+\setlength{\topmargin}{-2em}
+\addtolength{\textheight}{-1.0\topmargin}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\evensidemargin}{0.0in}
+
+%----- Tighten up paragraphs and lists
+\setlength{\parskip}{0.0ex}
+\setlength{\parindent}{0.2in}
+\renewenvironment{itemize}{\begin{list}{$\bullet$}{%
+  \setlength{\topsep}{0.0ex}%
+  \setlength{\parsep}{0.0ex}%
+  \setlength{\partopsep}{0.0ex}%
+  \setlength{\itemsep}{0.0ex}%
+  \setlength{\leftmargin}{1.5\parindent}}}{\end{list}}
+\newcounter{actr}
+\renewenvironment{enumerate}{\begin{list}{\arabic{actr}.}{%
+  \usecounter{actr}%
+  \setlength{\topsep}{0.0ex}%
+  \setlength{\parsep}{0.0ex}%
+  \setlength{\partopsep}{0.0ex}%
+  \setlength{\itemsep}{0.0ex}%
+  \setlength{\leftmargin}{1.5\parindent}}}{\end{list}}
+
+%----- mess with paragraph spacing!
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {1ex}%
+                                    {-1em}%
+                                    {\normalfont\normalsize\bfseries}}
+\makeatother
+
+%----- Special Hogg list for references
+  \newcommand{\hogglist}{%
+    \rightmargin=0in
+    \leftmargin=0.25in
+    \topsep=0ex
+    \partopsep=0pt
+    \itemsep=0ex
+    \parsep=0pt
+    \itemindent=-1.0\leftmargin
+    \listparindent=\leftmargin
+    \settowidth{\labelsep}{~}
+    \usecounter{enumi}
+  }
+
+%----- side-to-side figure macro
+%------- make numbers add up to 94%
+ \newlength{\figurewidth}
+ \newlength{\captionwidth}
+ \newcommand{\ssfigure}[3]{%
+   \setlength{\figurewidth}{#2\textwidth}
+   \setlength{\captionwidth}{\textwidth}
+   \addtolength{\captionwidth}{-\figurewidth}
+   \addtolength{\captionwidth}{-0.02\figurewidth}
+   \begin{figure}[htb]%
+   \begin{tabular}{cc}%
+     \begin{minipage}[c]{\figurewidth}%
+       \resizebox{\figurewidth}{!}{\includegraphics{#1}}%
+     \end{minipage} &%
+     \begin{minipage}[c]{\captionwidth}%
+       \textsf{\caption[]{\footnotesize {#3}}}%
+     \end{minipage}%
+   \end{tabular}%
+   \end{figure}}
+
+ \newcommand{\ssfiguretwo}[4]{%
+   \setlength{\figurewidth}{#3\textwidth}
+   \setlength{\captionwidth}{\textwidth}
+   \addtolength{\captionwidth}{-\figurewidth}
+   \addtolength{\captionwidth}{-0.02\figurewidth}
+   \begin{figure}[htb]%
+   \begin{tabular}{cc}%
+     \begin{minipage}[c]{\figurewidth}%
+       \resizebox{\figurewidth}{!}{\includegraphics{#1}}\\
+       \resizebox{\figurewidth}{!}{\includegraphics{#2}}%
+     \end{minipage} &%
+     \begin{minipage}[c]{\captionwidth}%
+       \textsf{\caption[]{\footnotesize {#4}}}%
+     \end{minipage}%
+   \end{tabular}%
+   \end{figure}}
+
+%----- top-bottom figure macro
+ \newlength{\figureheight}
+ \setlength{\figureheight}{0.75\textheight}
+ \newcommand{\tbfigure}[2]{%
+   \begin{figure}[htp]%
+   \resizebox{\textwidth}{!}{\includegraphics{#1}}%
+   \textsf{\caption[]{\footnotesize {#2}}}%
+   \end{figure}}
+
+%----- deal with pdf page-size stupidity
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+% no more bad lines!
+\sloppy\sloppypar
+
+%----- letterhead macro
+
+\newcommand{\letterhead}[5]{%
+\thispagestyle{empty}
+\hspace{-0.51in}\includegraphics[width=0.4\textwidth]{flatiron-logo.pdf}\par
+\noindent
+{#1} \\
+{\footnotesize
+{#2}\vspace{-0.25\baselineskip}\\
+{#3}\vspace{-0.25\baselineskip}\\
+{#4}\vspace{-0.25\baselineskip}\\
+\href{mailto:#5}{{#5}}}
+\vspace{\baselineskip}
+
+\noindent\today\\ }
+
+% nicer headers
+\pagestyle{myheadings}
